@@ -1,2 +1,2 @@
 # H2-Computing
-H2 Computing syllabus
+H2 Computing syllabus with necessary codes.
