@@ -1,20 +1,41 @@
 <html>
+	<body>
+	<h3>
+		The patient <u>{{Name}}</u> is under the care of the following specialist doctors:
+	</h3>
+	<table border = 'black'>
+		<tr>
+			<th>Doctor Name</th>
+			<th>Department</th>
+			<th>Designation</th>
+		</tr>
+		<tr> 
+			{% for i in range(lists|length) %}
+				<tr>
+					<td style = "text-align: center">{{lists[i][0]}}</td>
+					<td style = "text-align: center">{{lists[i][1]}}</td>
+					<td style = "text-align: center">{{lists[i][2]}}</td>
+				</tr>
+			{% endfor %}
+		</tr>
+	</table>
+	</body>
+</html>
+
+## main
+<html>
 <body>
-    <table border="black">
-            <tr>
-                <th>Student ID</th>
-                <th>Type</th>
-                <th>Venue</th>
-                <th>Session</th>
-            </tr>
-            {% for row in rows %}
-            <tr>
-                <td>{{ row[0] }}</td>
-                <td>{{ row[1] }}</td>
-                <td>{{ row[2] }}</td>
-                <td>{{ row[3] }}</td>
-            </tr>
-            {% endfor %}
+<form action="/search" method="post">
+    <table>
+		<tr> 
+			<h2>JP Hospital Search Patient Form</h2>
+		</tr>
+        <tr>
+            <td><label for="Name">Patient's Name:</label></td>
+            <td><input type="text" id="patientName" name="Name"></td>
+            <td><input type="submit" value="Search"></td>
+        </tr>
     </table>
+</form>
 </body>
 </html>
