@@ -1,5 +1,5 @@
 import sqlite3
-DATABASE = "hospital.db"  
+DATABASE = "hospital.db"      
 
 def create_tables():  # Create tables in database
     with sqlite3.connect(DATABASE) as connection:
