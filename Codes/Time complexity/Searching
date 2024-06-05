@@ -1,0 +1,37 @@
+#linear search
+def linear_search(item, lst):
+    for i in range(len(lst)):
+        if lst[i] == item:
+            return True
+        elif lst[i] > item:
+            return False
+    return None
+
+#binary search (iterative)
+def binary_search(lst, item):
+	low = 0
+	high = len(lst) - 1
+	
+	while low <= high:
+		mid = (low + high) // 2
+		if lst[mid] == item:
+			return mid
+		elif item < lst[mid]:
+			high = mid - 1
+		else:
+			low = mid + 1
+	return -1
+
+#binary search (recursive)
+def binary_search(lst, item):
+	def helper(lst, item, low, high):
+		midpoint = (high + low) // 2
+		if low > high:
+			return False
+		elif lst[midpoint] == item:
+			return True
+		elif item > lst[midpoint]:
+			return helper(lst, item, midpoint + 1, high)
+		else:
+			return helper(lst, item, low, midpoint - 1)
+	return helper(lst, item, 0, len(lst) - 1)
