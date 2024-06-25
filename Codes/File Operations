@@ -1,0 +1,9 @@
+with open('TEXT.txt', 'r') as f:
+    f.readline() # to skip the first line
+    next(f)  # or use this to skip the first line
+
+    f1 = f.readlines()  
+    f2 = [line.strip() for line in f1] # ['Joyce Ng, 21S24', '01/08/2023,PRESENT']
+    
+    name, Class = f2[0].split(',') #['Joyce Ng', '21S24']
+    student = Student(name, Class) 
