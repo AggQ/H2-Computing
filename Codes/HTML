@@ -1,7 +1,7 @@
 <html>
 	<body>
 	<h3>
-		The patient <u>{{Name}}</u> is under the care of the following specialist doctors:
+		The patient <b><u>{{Name}}</u></b> is under the care of the following specialist doctors:  # This is to uderline and bold the word
 	</h3>
 	<table border = 'black'>
 		<tr>
@@ -10,11 +10,11 @@
 			<th>Designation</th>
 		</tr>
 		<tr> 
-			{% for i in range(lists|length) %}
+			{% for i in range(lists|length) %}  # syntax of for loop
 				<tr>
-					<td style = "text-align: center">{{lists[i][0]}}</td>
-					<td style = "text-align: center">{{lists[i][1]}}</td>
-					<td style = "text-align: center">{{lists[i][2]}}</td>
+					<td>{{lists[i][0]}}</td>
+					<td>{{lists[i][1]}}</td>
+					<td>{{lists[i][2]}}</td>
 				</tr>
 			{% endfor %}
 		</tr>
@@ -22,10 +22,10 @@
 	</body>
 </html>
 
-## main
+## main program / page
 <html>
 <body>
-<form action="/search" method="post">
+<form action="/search" method="post">  # This is to get input / data from user
     <table>
 		<tr> 
 			<h2>JP Hospital Search Patient Form</h2>
@@ -33,8 +33,8 @@
         <tr>
             <td><label for="Name">Patient's Name:</label></td>
             <td><input type="text" id="patientName" name="Name"></td>
-            <td><input type="submit" value="Search"></td>
-        </tr>
+	            <td><input type="submit" name = "submit" value="Search"></td>  # value is what appears on the button Eg. submission = request.form['submit']
+        </tr>															if submission == 'Generate Report':
     </table>
 </form>
 </body>
