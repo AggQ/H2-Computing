@@ -1,0 +1,93 @@
+class HashTable:
+    def __init__(self, size):
+        self.slots = [None] * size  # key -
+        self.data = [None] * size  # value pair
+        self.count = 0  # Number of elements (real size)
+        self.size = size  # Max size or length
+
+    def hash(self, key):
+        return key % self.size
+
+    def rehash(self, hash_value):  # linear probe
+        return (hash_value + 1) % self.size
+
+    def load_factor(self):  # ratio 0-1
+        return self.count / self.size
+
+    def insert(self, key, data):
+        if self.load_factor() == 1:  # case 1: full
+            print("Hash table is full!")
+        else:
+            hash_value = self.hash(key)
+            while self.slots[hash_value] and self.slots[hash_value] is not key:  # find an empty slot by rehash (no collision)
+                hash_value = self.rehash(hash_value)
+            if self.slots[hash_value] == key:  # case 2: key already exists in hash table
+                print("Key already exists in hash table!")
+            else:  # case 3 : no restrictions, add key-value
+                self.slots[hash_value] = key
+                self.data[hash_value] = data
+                self.count += 1  # increase ratio
+
+    def search(self, key):  # search by key
+        hash_value = self.hash(key)
+        count = 0  # To avoid infinite looping
+        # Loop until an empty slot or the key is found, or until the entire table is searched
+        while self.slots[hash_value] and self.slots[hash_value] is not key and count < self.size:
+            hash_value = self.rehash(hash_value)
+            count += 1
+        if self.slots[hash_value] == key:  # if key found
+            return self.data[hash_value]
+
+    def Remove(self, key):
+        hash_value = self.hash(key)
+        count = 0
+        # Loop until an empty slot or the key is found, or until the entire table is searched
+        while self.slots[hash_value] and self.slots[hash_value] is not key and count < self.size:
+            hash_value = self.rehash(hash_value)
+            count += 1
+        if self.slots[hash_value] == key:
+            self.data[hash_value] = None
+
+    def Search(self, key):  # search by key
+        hash_value = self.hash(key)
+        count = 0
+        while self.slots[hash_value] and self.slots[hash_value] is not key and count < self.size:
+            hash_value = self.rehash(hash_value)
+            count += 1
+        if self.slots[hash_value] == key:
+            return self.data[hash_value]
+
+    def Display(self):
+        print('HashTable')
+        print('Index\tName')
+        for index, item in enumerate(self.data):
+            print(index+1, '\t', item)
+
+
+hash_table = HashTable(10)
+
+# Test insert method
+hash_table.insert(1, "Song A")
+hash_table.insert(2, "Song B")  # Should print "Hash table is full! Key not entered: 11"
+hash_table.insert(3, "Song C")
+hash_table.insert(4, "Song D")  # Should print "Hash table is full! Key not entered: 12"
+hash_table.insert(5, "Song E")
+hash_table.insert(6, "Song F")
+hash_table.insert(7, "Song G")
+
+# Test search method
+print(hash_table.search(1))  # Output: "Song A"
+print(hash_table.search(2))  # Output: "Song E"
+
+# Test Remove method
+hash_table.Remove(1)
+hash_table.Remove(2)
+hash_table.Remove(3)  
+
+# Test Search method after adding and removing records
+print(hash_table.Search(1))  # Output: "None" (SongID 1 was removed)
+print(hash_table.Search(6))  # Output: "None" (SongID 6 was removed)
+print(hash_table.Search(5))  # Output: "Song G"
+
+# Display hash table data
+hash_table.Display()
