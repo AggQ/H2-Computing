@@ -1,0 +1,40 @@
+POP
+popped_item = my_list.pop(2)  # Removes and returns the item at index 2, also can use for Dictionary
+missing_digit.pop()  # removes (), {}
+
+INDEX
+index_of_zero = [2, 0, 4, 0].index(0)
+
+RANGE
+for i in range(0, 10, 2):  # Start, Stop, Skip  Result: 0 2 4 6 8
+    print(i, end=" ") 
+
+COUNT
+if column.count(0) == 1:
+
+ENUMERATE
+GIVES INDEX
+
+DP
+"{number:.2f}"
+test = format(5.90234, ".2f")
+
+SET
+Value1 = set([i for i in values])  # remove repeated
+set(range(1, 5)) - set(column)  # Find missing
+
+SORTED
+Sorted(value1, key=sorting)  # Custom sorting
+
+JOIN
+' '.join()
+
+STRIP
+' '.strip()
+
+FORMULA
+%  # resets to length
+
+FORMATTED PRINT
+str(item).ljust(10)
+str(item).rjust(10)
