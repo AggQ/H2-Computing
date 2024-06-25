@@ -1,0 +1,31 @@
+dic1 = {"Mark": "S001", "Vonny": "S002", "Ash": "S001", "Joyce": "S005", "Weiling": "S005", "John": "S009",
+        "Tim": "S007"}
+
+def uniqueValues(dic):
+    keys = dic.keys()
+    values = dic.values()
+    value1 = set([i for i in values])            # remove repeated
+    return sorted(value1, key=sorting)           # Custom sorting
+
+
+print(uniqueValues(dic1))
+
+# Dictionary 2
+d1 = {'a': 100, 'b': 200, 'c': 300}
+d2 = {'a': 300, 'b': 200, 'd': 400}
+
+
+def combine(d1, d2):
+    d1k, d1v = [i for i in d1.keys()], [i for i in d1.values()]  # Blueprint in list form
+    d2k, d2v = [i for i in d2.keys()], [i for i in d2.values()]
+    dict1 = dict(zip(d1k, d1v))                                  # Create new dictionary in zip arranged form
+    # dict1.update(zip(d2k, d2v))                                # Update value
+    for key, value in zip(d2k, d2v):  # Add values in blueprint
+        if key in dict1:
+            dict1[key] += value                                  # get value from key and Add
+        else:
+            dict1[key] = value                                   # Update
+    return dict1
+
+popped_value = my_dict.pop('b')                                  # Delete
+# print(combine(d1, d2))
