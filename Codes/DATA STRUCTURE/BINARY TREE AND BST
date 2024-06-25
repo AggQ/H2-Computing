@@ -1,0 +1,179 @@
+#BST - level order search/breadth first search
+class Node:
+    def __init__(self, data):
+        self.left = None
+        self.right = None
+        self.data = data
+
+
+class BinaryTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, data):
+        if self.root is None:
+            self.root = Node(data)  # Set new node as root if tree is empty
+            return
+
+        q = [self.root]             # Initialize queue with root
+
+        while q:
+            curr = q[0]  # Get front node of queue
+            curr = q.pop(0)  # Remove front node from queue
+            if curr.left is None:
+                curr.left = Node(data)  # Insert new node as left child if left child is empty
+                break
+            elif curr.right is None:
+                curr.right = Node(data)  # Insert new node as right child if right child is empty
+                break
+            else:
+                q.append(curr.left)     # Add left child to queue if left child is present
+                q.append(curr.right)    # Add right child to queue if right child is present
+
+    def traverse(self):
+        if self.root is None:
+            return
+
+        q = [self.root]             # Initialize queue with root
+
+        while q:
+            curr = q.pop(0)         # Get front node of queue and remove it
+            print(curr.data)        # Print data of current node
+            if curr.left:
+                q.append(curr.left)     # # Add left child to queue if there is left child, repeats until inserted
+            if curr.right:
+                q.append(curr.right)    # Add right child to queue if  there is right child
+
+T = BinaryTree()
+
+name = 'Jotaro'
+LevelOrder = list(name)
+for i in LevelOrder:
+    T.insert(i)
+T.traverse()
+
+print(T.root.data)
+print(T.root.left.data)
+print(T.root.right.data)
+
+
+# BST - inorder
+class Node:
+    def __init__(self, ID, data):  # public
+        self.ID = ID
+        self.Data = data
+        self.Left = None  # Node
+        self.Right = None  # Node
+
+
+class BST:
+    def __init__(self):  # Constructor
+        self.Root = None  # Node
+
+    def AddNode(self, ID, data):  # change to ID or Data (can be both numeric or alphabetic)
+        newNode = Node(ID, data)
+
+        if self.Root is None:  # If the tree is empty
+            self.Root = newNode
+        else:
+            curr = self.Root
+
+            while True:
+                if curr.ID > newNode.ID:  # root has higher value
+                    if curr.Left is None:  # Insert as left child
+                        curr.Left = newNode
+                        break
+                    else:
+                        curr = curr.Left  # Traverse to next left subtree
+                else:
+                    if curr.Right is None:
+                        curr.Right = newNode  # Insert as right child if right child is None
+                        break
+                    else:
+                        curr = curr.Right  # Traverse to next right subtree
+
+    def Display(self):
+        print('ID:\tData:')
+
+        def DisplayHelper(node):
+            if node.Left is not None:
+                DisplayHelper(node.Left)  # Recursively display left subtree
+            print(str(node.ID) + '\t' + node.Data)  # Print ID and data
+            if node.Right is not None:
+                DisplayHelper(node.Right)  # Recursively display right subtree
+
+        DisplayHelper(self.Root)  # Call helper function to start traversal
+
+    def Search(self, ID):
+        def SearchHelper(node, ID):
+            if node is None:
+                return False
+            elif node.ID == ID:
+                return True
+
+            if ID > node.ID:
+                return SearchHelper(node.Right, ID)
+            return SearchHelper(node.Left, ID)
+
+        return SearchHelper(self.Root, ID)
+
+    def Height(self):
+        def HeightHelper(node):
+            if node is None:
+                return 0
+            else:
+                left_height = HeightHelper(node.Left)
+                right_height = HeightHelper(node.Right)
+                return max(left_height, right_height) + 1  # returns larger number + 1
+
+        return HeightHelper(self.Root)
+
+    def PreOrderTraversal(self):
+        def PreOrderHelper(node):
+            if node:
+                print(str(node.ID) + '\t' + node.Data)  # Pre (root first)
+                PreOrderHelper(node.Left)
+                PreOrderHelper(node.Right)
+
+        PreOrderHelper(self.Root)
+
+    def InOrderTraversal(self):
+        def InOrderHelper(node):
+            if node:
+                InOrderHelper(node.Left)
+                print(str(node.ID) + '\t' + node.Data)  # In (root second)
+                InOrderHelper(node.Right)
+
+        InOrderHelper(self.Root)
+
+    def PostOrderTraversal(self):
+        def PostOrderHelper(node):
+            if node:
+                PostOrderHelper(node.Left)
+                PostOrderHelper(node.Right)
+                print(str(node.ID) + '\t' + node.Data)  # Post (root third)
+
+        PostOrderHelper(self.Root)
+
+
+
+# Test cases
+bst = BST()
+
+bst.AddNode(2334, "Apple")
+bst.AddNode(4556, "Banana")
+bst.AddNode(6551, "Cherry")
+bst.AddNode(7884, "Book 3")
+print(bst.Height())
+print(bst.Search(4556))
+
+#bst.Display()  # change ISBN to ID and title to Data in Node and BST
+
+print("Pre-order Traversal:")
+bst.PreOrderTraversal()
+print()
+print("In-order Traversal:")
+bst.InOrderTraversal()
+print()
+print("Post-order Traversal:")
+bst.PostOrderTraversal()
