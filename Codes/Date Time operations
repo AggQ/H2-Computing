@@ -1,0 +1,19 @@
+from datetime import datetime
+
+# Tuple to Date
+dob = (1976, 7, 12)
+parsed_date = datetime(dob[0], dob[1], dob[2])  # year, month, day
+
+# Current date and time
+now = datetime.now()
+now_str = now.strftime('%d/%m/%y')  # This is a string strftime
+
+# Setting your own date
+date_string = "2023-06-24 15:30:00"  # your own format
+parsed_date = datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S")  # strptime
+
+# Finding the difference in days
+difference_in_days = (now - parsed_date).days
+
+# Setting your own date with datetime object
+date1 = datetime(2023, 6, 24)
