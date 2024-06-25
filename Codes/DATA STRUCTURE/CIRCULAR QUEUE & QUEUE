@@ -1,0 +1,84 @@
+class CircularQueue:
+    def __init__(self, max_size):
+        self.queue = [None] * max_size  # Initialize the queue with None values
+        self.head = 0  # Initialize the head pointer (top)
+        self.tail = 0  # Initialize the tail pointer (bottom)
+        self.count = 0  # Initialize the count of elements
+        self.max_size = max_size  # Set the maximum size of the queue
+
+    def enqueue(self, data):  # insert at rear
+        if self.count == self.max_size:  # Check if the queue is full
+            print("Circular queue is full!")
+            return
+        self.queue[self.tail] = data  # Insert data into the queue
+        self.tail = (self.tail + 1) % self.max_size  # Update the tail pointer
+        self.count += 1
+
+    def dequeue(self):  # remove at top (head)
+        if self.count == 0:  # Check if the queue is empty
+            print("Circular queue is empty! Data not dequeued.")
+            return
+        data = self.queue[self.head]  # Get the data at the head of the queue
+        self.queue[self.head] = None  # Remove data from the queue
+        self.head = (self.head + 1) % self.max_size  # Update the head pointer
+        self.count -= 1
+        return data  # Return the dequeued data
+
+    def peek(self):  # head peeks out
+        if self.count == 0:  # Check if the queue is empty
+            return None
+        return self.queue[self.head]  # Return the data at the head of the queue
+
+    def size(self):
+        return self.count  # Return the number of elements in the queue
+
+
+class Queue:  # FIFO (like a queuing)
+    def __init__(self, max_size):
+        self.Items = [None] * max_size
+        self.Front = 0
+        self.Rear = 0
+        self.count = 0
+        self.max_size = max_size
+
+    def IsEmpty(self):
+        return self.Front == self.Rear
+
+    def IsFull(self):
+        return (self.Rear - self.Front) == self.max_size
+
+    def enqueue(self, data):
+        if self.IsFull():
+            print('Queue is Full!')
+            return
+        self.Items[self.Rear % self.max_size] = data  # Find position
+        self.Rear += 1
+
+    def dequeue(self):
+        if self.IsEmpty():
+            print('Queue is Empty!')
+            return
+        self.Items[self.Front % self.max_size] = None  # Find position
+        self.Front += 1
+
+    def display(self):
+        print([i for i in self.Items[self.Front:self.Rear]])
+
+
+class BasicQueue:  # FIFO (like a queuing)
+    def __init__(self):
+        self.queue = []  # end of queue is first item
+
+    def enqueue(self, data):
+        self.queue.append(data)
+
+    def dequeue(self):
+        if self.queue:
+            return self.queue.pop(0)
+
+    def peek(self):  # peek at last item
+        if self.queue:
+            return self.queue[0]
+
+    def size(self):
+        return len(self.queue)
