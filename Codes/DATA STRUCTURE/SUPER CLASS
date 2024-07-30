@@ -1,0 +1,30 @@
+class Person(object):
+    def __init__(self, name):
+        self.name = name
+
+    def getName(self):
+        return self.name
+
+    def isEmployee(self):
+        return False
+
+
+# Inherited or Subclass (Note Person in bracket)
+class Employee(Person):
+    def __init__(self, name, eid):
+        super(Employee, self).__init__(name)  # This is to define superclass and to initialise name
+        self.empID = eid
+
+    def isEmployee(self):
+        return True
+
+    def getID(self):
+        a = super(Employee, self).getName()  # This is to inherit methods
+        print(a)
+        return self.empID
+
+    # Driver code
+
+
+emp = Employee("Geek1", "E101")
+print(emp.getName(), emp.isEmployee(), emp.getID())
