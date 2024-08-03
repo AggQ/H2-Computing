@@ -1,4 +1,4 @@
-#BST - level order search/breadth first search
+# BINARY TREE
 class Node:
     def __init__(self, data):
         self.left = None
@@ -57,7 +57,7 @@ print(T.root.left.data)
 print(T.root.right.data)
 
 
-# BST - inorder
+# BINARY SEARCH TREE
 class Node:
     def __init__(self, ID, data):  # public
         self.ID = ID
@@ -169,11 +169,105 @@ print(bst.Search(4556))
 
 #bst.Display()  # change ISBN to ID and title to Data in Node and BST
 
-print("Pre-order Traversal:")
-bst.PreOrderTraversal()
-print()
 print("In-order Traversal:")
 bst.InOrderTraversal()
-print()
-print("Post-order Traversal:")
-bst.PostOrderTraversal()
+
+
+# FREE SPACE BINARY SEARCH TREE
+class FreeSpaceBinarySearchTree:
+    def __init__(self, size):
+        # Initialize arrays for data, left and right pointers, and free list pointers
+        self.data = [None] * size  # Array to store data at each node
+        self.left = [-1] * size    # Array to store left child pointers
+        self.right = [-1] * size   # Array to store right child pointers
+        self.pointer = [i for i in range(1, size)] + [-1]  # Free list to manage available slots
+        self.root = -1             # Pointer to the root node
+        self.next_free = 0         # Pointer to the next free slot in the free list
+
+    def insert(self, data):
+        # Insert data into the tree
+        if self.next_free == -1:
+            print(f"Binary search tree is full! Data not entered: {data}")
+        elif self.root == -1:
+            # If tree is empty, insert at root
+            self.data[self.next_free] = data
+            self.pointer[self.next_free], self.root, self.next_free = -1, self.next_free, self.pointer[self.next_free]
+        else:
+            # Traverse the tree to find the correct position to insert
+            curr_pointer = self.root
+            while curr_pointer != -1:
+                if data < self.data[curr_pointer]:
+                    if self.left[curr_pointer] == -1:
+                        # Insert as left child
+                        self.data[self.next_free] = data
+                        self.pointer[self.next_free], self.left[curr_pointer], self.next_free = -1, self.next_free, self.pointer[self.next_free]
+                        curr_pointer = -1
+                    else:
+                        curr_pointer = self.left[curr_pointer]
+                else:
+                    if self.right[curr_pointer] == -1:
+                        # Insert as right child
+                        self.data[self.next_free] = data
+                        self.pointer[self.next_free], self.right[curr_pointer], self.next_free = -1, self.next_free, self.pointer[self.next_free]
+                        curr_pointer = -1
+                    else:
+                        curr_pointer = self.right[curr_pointer]
+
+    def search(self, data):
+        # Search for data in the tree
+        curr_pointer = self.root
+        while curr_pointer != -1 and data != self.data[curr_pointer]:
+            if data < self.data[curr_pointer]:
+                curr_pointer = self.left[curr_pointer]
+            else:
+                curr_pointer = self.right[curr_pointer]
+        return data == self.data[curr_pointer]  # Return True if found, False otherwise
+
+    def height(self):
+        # Calculate the height of the tree
+        def helper(curr_pointer):
+            if curr_pointer == -1:
+                return -1
+            else:
+                return 1 + max(helper(self.left[curr_pointer]), helper(self.right[curr_pointer]))
+        return helper(self.root)
+
+    def inorder_traversal(self):
+        # Perform inorder traversal (left, root, right) and return nodes in a list
+        def helper(curr_pointer):
+            if curr_pointer == -1:
+                return []
+            else:
+                return helper(self.left[curr_pointer]) + [self.data[curr_pointer]] + helper(self.right[curr_pointer])
+        return helper(self.root)
+
+    def preorder_traversal(self):
+        # Perform preorder traversal (root, left, right) and return nodes in a list
+        def helper(curr_pointer):
+            if curr_pointer == -1:
+                return []
+            else:
+                return [self.data[curr_pointer]] + helper(self.left[curr_pointer]) + helper(self.right[curr_pointer])
+        return helper(self.root)
+
+    def postorder_traversal(self):
+        # Perform postorder traversal (left, right, root) and return nodes in a list
+        def helper(curr_pointer):
+            if curr_pointer == -1:
+                return []
+            else:
+                return helper(self.left[curr_pointer]) + helper(self.right[curr_pointer]) + [self.data[curr_pointer]]
+        return helper(self.root)
+
+# Example usage:
+lst = [5, 3, 7, 2, 4, 6, 8]
+free_space_binary_search_tree = FreeSpaceBinarySearchTree(len(lst))
+
+# Insert elements into the tree
+for item in lst:
+    free_space_binary_search_tree.insert(item)
+
+# Perform operations on the tree
+print(f"Search for 0:", free_space_binary_search_tree.search(0))
+print("Height: ", free_space_binary_search_tree.height())
+print("Inorder:", free_space_binary_search_tree.inorder_traversal())
